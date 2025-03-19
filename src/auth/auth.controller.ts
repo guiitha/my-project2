@@ -17,4 +17,10 @@ export class AuthController {
         const users = await this.authService.getAllUsers();
         return users;
     }
+
+    @Post('signIn')
+    async signIn(@Body() userData: User) {
+        const data = await this.authService.signIn(userData);
+        return data;
+    }
 }

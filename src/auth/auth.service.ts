@@ -2,7 +2,8 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository } from 'typeorm';
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthService {
@@ -35,5 +36,30 @@ export class AuthService {
 
     async getAllUsers() {
         return await this.userRepository.find();
+    }
+
+    async signIn(userData: User) {
+        const user = await this.userRepository.findOne({
+            where: { username: userData.username },
+        });
+
+        const doMatch = await bcrypt.compare(userData.password, user?.password);
+        if (!user || doMatch == false) {
+            throw new HttpException(
+                'Username or password is incorrect.',
+                HttpStatus.NOT_FOUND,
+            );
+        }
+
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+            expiresIn: '30d',
+        });
+
+        return {
+            id: user.id,
+            username: user.username,
+            avatarURL: user.avatarURL,
+            token,
+        };
     }
 }
