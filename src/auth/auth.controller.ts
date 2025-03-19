@@ -12,5 +12,9 @@ export class AuthController {
         return register;
     }
 
-
+    @Get()
+    async getAllUsers() {
+        const users = await this.authService.getAllUsers();
+        return users;
+    }
 }

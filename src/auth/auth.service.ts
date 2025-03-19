@@ -33,7 +33,7 @@ export class AuthService {
         });
     }
 
-
-
-
+    async getAllUsers() {
+        return await this.userRepository.find();
+    }
 }
