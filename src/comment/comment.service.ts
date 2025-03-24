@@ -36,4 +36,15 @@ export class CommentService {
             );
         }
     }
+
+    async getCommentsByPostId(postId: string) {
+        try {
+            console.log(postId);
+            return await this.commentRepository.find({
+                where: { postId: postId },
+            });
+        } catch (error) {
+
+        }
+    }
 }

@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class AuthService {
@@ -62,4 +63,20 @@ export class AuthService {
             token,
         };
     }
+
+    async getUserById(id: string) {
+        try {
+            const user = await this.userRepository.findOne({
+                where: { _id: new ObjectId(id) }
+            });
+            return user;
+        } catch {
+
+        }
+    }
 }
+/*        
+const user = await this.userRepository.findOne({
+            where: { username: userData.username },
+        });
+*/

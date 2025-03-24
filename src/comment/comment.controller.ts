@@ -19,4 +19,11 @@ export class CommentController {
         const comment = await this.commentService.getAllComments();
         return comment;
     }
+
+    @Get(':postId')
+    async getCommentsByPostId(@Param('postId') postId: string) {
+        console.log(postId);
+        const comment = await this.commentService.getCommentsByPostId(postId);
+        return comment;
+    }
 }
