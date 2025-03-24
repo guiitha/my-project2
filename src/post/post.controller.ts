@@ -1,7 +1,7 @@
 import { Controller, Post, UseGuards, Body, Get, Param, Put, Delete } from '@nestjs/common';
 import { PostService } from './post.service';
 import { Posts } from './post.entity';
-import { Authorize } from 'src/authorize.guard';
+import { Authorize } from '../authorize.guard';
 
 @Controller('post')
 export class PostController {

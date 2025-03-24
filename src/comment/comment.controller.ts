@@ -1,7 +1,7 @@
 import { Controller, Body, Post, UseGuards, Get, Delete, Put, Param } from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { Comments } from './comment.entity';
-import { Authorize } from 'src/authorize.guard';
+import { Authorize } from '../authorize.guard';
 
 @Controller('comment')
 export class CommentController {
@@ -26,4 +26,6 @@ export class CommentController {
         const comment = await this.commentService.getCommentsByPostId(postId);
         return comment;
     }
+
+
 }
